@@ -2,6 +2,8 @@ package net.zaydkassimi.customer_service;
 
 import net.zaydkassimi.customer_service.entities.Customer;
 import net.zaydkassimi.customer_service.service.CustomerService;
+import org.springframework.ai.tool.ToolCallbackProvider;
+import org.springframework.ai.tool.method.MethodToolCallbackProvider;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -26,5 +28,12 @@ public class CustomerServiceApplication {
                         .build());
             });
         };
+    }
+
+    @Bean
+    public ToolCallbackProvider customerTools(CustomerService customerService) {
+        return MethodToolCallbackProvider.builder()
+                .toolObjects(customerService)
+                .build();
     }
 }

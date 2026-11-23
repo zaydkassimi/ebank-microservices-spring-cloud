@@ -5,3 +5,5 @@ target/
 *.iws
 *.ipr
 .DS_Store
+.env
+*.cer

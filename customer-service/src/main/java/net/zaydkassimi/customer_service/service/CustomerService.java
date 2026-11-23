@@ -2,6 +2,8 @@ package net.zaydkassimi.customer_service.service;
 
 import net.zaydkassimi.customer_service.entities.Customer;
 import net.zaydkassimi.customer_service.repository.CustomerRepository;
+import org.springframework.ai.tool.annotation.Tool;
+import org.springframework.ai.tool.annotation.ToolParam;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,16 +16,19 @@ public class CustomerService {
         this.customerRepository = customerRepository;
     }
 
+    @Tool(description = "Get all customers")
     public List<Customer> getAllCustomers() {
         return customerRepository.findAll();
     }
 
-    public Customer findCustomerById(Long id) {
+    @Tool(description = "Find customer by ID")
+    public Customer findCustomerById(@ToolParam(description = "The customer ID") Long id) {
         return customerRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Customer not found"));
     }
 
-    public Customer saveCustomer(Customer customer) {
+    @Tool(description = "Save a new customer with name and email")
+    public Customer saveCustomer(@ToolParam(description = "Customer object with name and email") Customer customer) {
         return customerRepository.save(customer);
     }
 }

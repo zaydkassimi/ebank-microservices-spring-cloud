@@ -2,6 +2,8 @@ package net.zaydkassimi.ebank_service;
 
 import net.zaydkassimi.ebank_service.entities.BankAccount;
 import net.zaydkassimi.ebank_service.service.EBankService;
+import org.springframework.ai.tool.ToolCallbackProvider;
+import org.springframework.ai.tool.method.MethodToolCallbackProvider;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -29,5 +31,12 @@ public class EbankServiceApplication {
                 }
             }
         };
+    }
+
+    @Bean
+    public ToolCallbackProvider ebankTools(EBankService eBankService) {
+        return MethodToolCallbackProvider.builder()
+                .toolObjects(eBankService)
+                .build();
     }
 }
